@@ -29,5 +29,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             # nombre=nombre,
             # apellido=apellido
         )
+        user.set_password(password)
+        user.save()
         return user
         
