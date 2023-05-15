@@ -8,6 +8,7 @@ class Project(models.Model):
     created_at= models.DateTimeField(auto_now_add=True)
 class Anemia(models.Model):
     nombreUsuario=models.CharField(max_length=200)
+    genero = models.IntegerField(default=0)
     Hemogobina= models.CharField(max_length=100)
     MCH=models.CharField(max_length=100)
     MCHC=models.CharField(max_length=100)
@@ -15,3 +16,17 @@ class Anemia(models.Model):
     Resultado=models.CharField(max_length=100)
     def __str__(self):
         return self.nombreUsuario
+class Diabetes(models.Model):
+    nombreUsuario=models.CharField(max_length=200)
+    genero = models.IntegerField(default=0)
+    hipertencion=models.CharField(max_length=100)
+    cardiopatia=models.CharField(max_length=100)
+    fumador=models.CharField(max_length=100)
+    MCI=models.CharField(max_length=100)
+    nivelesHemoglobina=models.CharField(max_length=100)
+    nivelGlucosa=models.CharField(max_length=100)
+    edad=models.IntegerField(default=0)
+    resultado=models.CharField(max_length=100)
+    def __str__(self):
+        return self.nombreUsuario
+    

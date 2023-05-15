@@ -1,0 +1,3 @@
+Edad, sexo, consumo de alcohol, alergia al polvo, riesgo genético, enfermedad pulmonar crónica, dieta equilibrada, obesidad, tabaquismo, fumador pasivo, dolor torácico, tos con sangre, fatiga, pérdida de peso, dificultad para respirar, sibilancias, dificultad para tragar, hipocratismo Uñas de los dedos, resfriado frecuente, tos seca, ronquidos
+https://www.kaggle.com/code/ragishehab/anemiaprediction
+https://www.kaggle.com/code/ishantgargml/diabetes-prediction-96-99-accuracy-ann/notebook
