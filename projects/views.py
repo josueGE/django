@@ -1,4 +1,3 @@
-import pickle
 from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import AnemiaSerializer
@@ -7,10 +6,8 @@ from .models import Anemia
 from .models import Diabetes
 from django.shortcuts import render
 from rest_framework.decorators import api_view,permission_classes
-from sklearn import svm
 import numpy as np
 from rest_framework.response import Response
-import joblib
 from rest_framework import status
 
 # Create your views here.
