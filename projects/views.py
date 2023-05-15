@@ -6,25 +6,25 @@ from .models import Anemia
 from .models import Diabetes
 from django.shortcuts import render
 from rest_framework.decorators import api_view,permission_classes
-import numpy as np
+
 from rest_framework.response import Response
 from rest_framework import status
 
 # Create your views here.
 Model_path='./MODELADOS/anemia.pkl'
 
-def model_prediction(x_in,model):
-    x=np.asanyarray(x_in).reshape(1,-1)
-    preds= model.predict(x_in)
-    return preds
-def model_prediction_tf(x_in,model):
-    #x=np.asanyarray(x_in).reshape(1,-1)
-    preds= model.predict(x_in)
-    if preds>0.5:
-        preds=1
-    else:
-        preds=0
-    return preds
+# def model_prediction(x_in,model):
+#     x=np.asanyarray(x_in).reshape(1,-1)
+#     preds= model.predict(x_in)
+#     return preds
+# def model_prediction_tf(x_in,model):
+#     #x=np.asanyarray(x_in).reshape(1,-1)
+#     preds= model.predict(x_in)
+#     if preds>0.5:
+#         preds=1
+#     else:
+#         preds=0
+#     return preds
 class DiabetesViewSet(viewsets.ModelViewSet):
     serializer_class = DiabetesSerializer
     queryset = Diabetes.objects.all()         
