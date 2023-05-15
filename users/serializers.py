@@ -28,6 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=email,
             # nombre=nombre,
             # apellido=apellido
+            #sdasdasdasdasd
         )
         user.set_password(password)
         user.save()
