@@ -1,7 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers,viewsets
-from .views import AnemiaViewSet,DiabetesViewSet
-from .viewsCancerP import CancerPulmonarViewSet
+from .views import AnemiaViewSet,DiabetesViewSet,CancerPulmonarViewSet
 
 routerAnemia = routers.DefaultRouter()
 routerAnemia.register(r'anemia', AnemiaViewSet)
