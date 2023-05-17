@@ -45,29 +45,24 @@ class DiabetesViewSet(viewsets.ModelViewSet):
             diabetes = Diabetes.objects.get(pk=pk)
         except Diabetes.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         serializer = self.serializer_class(diabetes)
         return Response(serializer.data)
-
     def update(self, request, pk=None):
         try:
             diabetes = Diabetes.objects.get(pk=pk)
         except Diabetes.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         serializer = self.serializer_class(diabetes, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def destroy(self, request, pk=None):
         try:
             diabetes = Diabetes.objects.get(pk=pk)
         except Diabetes.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
         diabetes.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     def list(self, request):
@@ -78,7 +73,6 @@ class DiabetesViewSet(viewsets.ModelViewSet):
 class AnemiaViewSet(viewsets.ModelViewSet):
     serializer_class = AnemiaSerializer
     queryset = Anemia.objects.all()
-
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
