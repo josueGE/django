@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Project
 from .models import Anemia
-from .models import Diabetes
+from .models import Diabetes,CancerPulmonar
+
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
@@ -14,4 +15,8 @@ class AnemiaSerializer(serializers.ModelSerializer):
 class DiabetesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diabetes
+        fields=('__all__')
+class  CancerPulmonarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= CancerPulmonar
         fields=('__all__')

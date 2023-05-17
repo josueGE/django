@@ -30,3 +30,23 @@ class Diabetes(models.Model):
     def __str__(self):
         return self.nombreUsuario
     
+class  CancerPulmonar(models.Model):
+    edad=models.IntegerField()
+    Genero=models.IntegerField()
+    ConsumoAlcohol=models.IntegerField()
+    AlergioPolvo=models.IntegerField()
+    RegistroGenetico=models.IntegerField()
+    EnfermedadPulmonar=models.IntegerField()
+    DietaEquilibrada=models.IntegerField()
+    Obesidad=models.IntegerField()
+    Tabaquismo=models.IntegerField()
+    fumadorPasico=models.IntegerField()
+    DolorPecho=models.IntegerField()
+    TosConSangre=models.IntegerField()
+    fatiga=models.IntegerField()
+    PerdidaPeso=models.IntegerField()
+    DificultadRespirar=models.IntegerField()
+    Sibilancia=models.IntegerField()
+    DificultadTragar=models.IntegerField()
+    TosSeca=models.IntegerField()
+    resultados=models.CharField(max_length=100)

@@ -70,7 +70,10 @@ class DiabetesViewSet(viewsets.ModelViewSet):
 
         diabetes.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+    def list(self, request):
+        anemias = Diabetes.objects.all()
+        serializer = self.serializer_class(anemias, many=True)
+        return Response(serializer.data)
 
 class AnemiaViewSet(viewsets.ModelViewSet):
     serializer_class = AnemiaSerializer
