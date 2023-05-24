@@ -31,6 +31,7 @@ class Diabetes(models.Model):
         return self.nombreUsuario
     
 class  CancerPulmonar(models.Model):
+    nombreUsuario=models.CharField(max_length=200,default='null' )
     edad=models.IntegerField()
     Genero=models.IntegerField()
     ConsumoAlcohol=models.IntegerField()
