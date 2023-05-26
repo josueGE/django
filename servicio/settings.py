@@ -24,6 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST_USER='pronosticcompanic@gmail.com'
+EMAIL_HOST_PASSWORD='q6MCUL8z4kypSVwf'
+EMAIL_PORT= 587
+DEFAULT_FROM_EMAIL = 'pronosticcompanic@gmail.com' 
+EMAIL_USE_TLS =True
 
 ALLOWED_HOSTS = []
 
@@ -135,3 +142,4 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

@@ -6,7 +6,6 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from .serializers import RegisterSerializer
 from django.contrib.auth.models import User
-from .serializers import RegisterSerializer
 from rest_framework import status
 # Create your views here.
 #nuevo login
@@ -28,6 +27,7 @@ def login(request):
     # Devolver una respuesta con el id, email y token de autenticación
     return Response({
         'id': user.id,
+        'username': user.username,
         'email': user.email,
     })
 #

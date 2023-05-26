@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import AnemiaSerializer
-from .serializers import DiabetesSerializer,CancerPulmonarSerializer
-from .models import Anemia
-from .models import Diabetes, CancerPulmonar
+# from serializers import AnemiaSerializer
+# from serializers import DiabetesSerializer,CancerPulmonarSerializer
+# from models import Anemia
+# from models import Diabetes, CancerPulmonar
 from django.shortcuts import render
 from rest_framework.decorators import api_view,permission_classes
 
 from rest_framework.response import Response
 from rest_framework import status
+from projects.models import Diabetes,Anemia,CancerPulmonar
+from projects.serializers import DiabetesSerializer,AnemiaSerializer,CancerPulmonarSerializer
 
 # Create your views here.
 Model_path='./MODELADOS/anemia.pkl'
@@ -120,9 +122,12 @@ class AnemiaViewSet(viewsets.ModelViewSet):
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk=None):
-        anemia = Anemia.objects.get(pk=pk)
-        serializer = self.serializer_class(anemia)
-        return Response(serializer.data)
+        try:
+            anemia = Anemia.objects.get(pk=pk)
+            serializer = self.serializer_class(anemia)
+            return Response(serializer.data)
+        except Anemia.DoesNotExist:
+             return Response({'error': 'no existe el reporte de anemia.'}, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk=None):
         anemia = Anemia.objects.get(pk=pk)
