@@ -50,14 +50,16 @@ class AsignacionMedicoViewSet(viewsets.ModelViewSet):
             paciente = asignacion.historial.paciente
             enfermedades = []
             if asignacion.historial.anemia:
-                enfermedades.append('anemia')
+                enfermedades.append(('anemia', asignacion.historial.anemia.id))
             if asignacion.historial.diabetes:
-                enfermedades.append('diabetes')
+                enfermedades.append(('diabetes', asignacion.historial.diabetes.id))
             if asignacion.historial.cancer_pulmonar:
-                enfermedades.append('cancer pulmonar')
+                enfermedades.append(('cancer pulmonar', asignacion.historial.cancer_pulmonar.id))
             resultado.append({
+                'paciente_id': paciente.id,
                 'nombre': paciente.nombre,
                 'apellido': paciente.apellido,
                 'enfermedades': enfermedades
             })
-        return Response(resultado, status=status.HTTP_200_OK)    
+        return Response(resultado, status=status.HTTP_200_OK)
+        
