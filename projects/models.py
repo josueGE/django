@@ -85,3 +85,14 @@ class HistorialPaciente(models.Model):
     anemia = models.ForeignKey(Anemia, null=True, blank=True, on_delete=models.SET_NULL)
     diabetes = models.ForeignKey(Diabetes, null=True, blank=True, on_delete=models.SET_NULL)
     cancer_pulmonar = models.ForeignKey(CancerPulmonar, null=True, blank=True, on_delete=models.SET_NULL)
+    class Meta:
+        unique_together = ['paciente', 'anemia', 'diabetes', 'cancer_pulmonar']
+class AsignacionMedico(models.Model):
+    historial = models.ForeignKey(HistorialPaciente, on_delete=models.CASCADE)
+    medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
+    fecha_asignacion = models.DateField()
+
+    # Otros campos adicionales relacionados con la asignación del médico al historial
+    class Meta:
+        verbose_name_plural = "Asignaciones Médicas"
+        unique_together=['historial']

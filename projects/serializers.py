@@ -37,3 +37,5 @@ class HistorialSerializer(serializers.ModelSerializer):
     class Meta:
         model=HistorialPaciente
         fields=('__all__')
+        #exclude=['paciente','anemia','diabetes','cancer_pulmonar']
+        unique_together = ['paciente', 'anemia', 'diabetes', 'cancer_pulmonar']

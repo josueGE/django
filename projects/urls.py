@@ -5,6 +5,7 @@ from projects.Views.views import AnemiaViewSet,DiabetesViewSet,CancerPulmonarVie
 from projects.Views.hospital_views import HospitalViewSet
 from projects.Views.medico_views import  MedicoViewSet
 from projects.Views.paciente_views import PacienteViewSet
+from projects.Views.enfemedades_views import HistorialViewSet
 # from Views import AnemiaViewSet,DiabetesViewSet,CancerPulmonarViewSet
 
 routerAnemia = routers.DefaultRouter()
@@ -19,6 +20,8 @@ routerMedico = routers.DefaultRouter()
 routerMedico.register(r'medico',MedicoViewSet)
 routerPaciente = routers.DefaultRouter()
 routerPaciente.register(r'paciente',PacienteViewSet)
+routerHistorial=routers.DefaultRouter()
+routerHistorial.register(r'historial',HistorialViewSet)
 urlpatterns = [
     path('', include(routerAnemia.urls)),
     path('', include(routerDiabetes.urls)),
@@ -26,7 +29,11 @@ urlpatterns = [
     path('', include(routerHospital.urls)),
     path('', include(routerMedico.urls)),
     path('', include(routerPaciente.urls)),
+    path('', include(routerHistorial.urls)),
     path('login/', MedicoViewSet.as_view({'post': 'login_api'}), name='login-api'),
     path('search/', PacienteViewSet.as_view({'get': 'search'}), name='search'),
-
+    path('enfermedades/anemia/',HistorialViewSet.as_view({'post':'create_Anemia'}), name='create-Anemia'),
+    path('enfermedades/diabetes/',HistorialViewSet.as_view({'post':'create_Diabetes'}), name='create-Diabetes'),
+    path('enfermedades/cancerPulmonar/',HistorialViewSet.as_view({'post':'create_CancerPulmonar'}), name='create-CancerPulmonar'),
+    path('enfermedades/historial/',HistorialViewSet.as_view({'get':'list'}), name='list'),
 ]
