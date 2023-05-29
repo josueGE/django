@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Project
 from .models import Anemia,Diabetes,CancerPulmonar
-from .models import Hospital,Medico,Paciente,HistorialPaciente
+from .models import Hospital,Medico,Paciente,HistorialPaciente,AsignacionMedico
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,3 +39,8 @@ class HistorialSerializer(serializers.ModelSerializer):
         fields=('__all__')
         #exclude=['paciente','anemia','diabetes','cancer_pulmonar']
         unique_together = ['paciente', 'anemia', 'diabetes', 'cancer_pulmonar']
+class AsignacionMedicoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=AsignacionMedico
+        fields=('__all__')
+        # exclude=['fecha_asignacion']
