@@ -3,10 +3,11 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from projects.serializers import MedicoSerializer
-from projects.models import Medico,Hospital
+from projects.models import Medico,Hospital, Paciente
 from django.contrib.auth.models import User
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
+from django.db.models import Q
 class  MedicoViewSet(viewsets.ModelViewSet):
     serializer_class = MedicoSerializer
     queryset = Medico.objects.all()
@@ -99,3 +100,26 @@ class  MedicoViewSet(viewsets.ModelViewSet):
             },
             'token':token,
         },status=status.HTTP_200_OK)
+    def obtener_pacientes_por_medico(self,request,medico_id):
+        pacientes = Paciente.objects.filter(
+            Q(anemia__medico_id=medico_id) | Q(diabetes__medico_id=medico_id) | Q(cancerpulmonar__medico_id=medico_id)
+        ).prefetch_related('anemia_set', 'diabetes_set', 'cancerpulmonar_set')
+
+        resultado = []
+        for paciente in pacientes:
+            enfermedades = []
+
+            if paciente.anemia_set.filter(medico_id=medico_id).exists():
+                enfermedades.append('anemia')
+            if paciente.diabetes_set.filter(medico_id=medico_id).exists():
+                enfermedades.append('diabetes')
+            if paciente.cancerpulmonar_set.filter(medico_id=medico_id).exists():
+                enfermedades.append('cancer_pulmonar')
+
+            resultado.append({
+                'nombre': paciente.nombre,
+                'apellido': paciente.apellido,
+                'enfermedades': enfermedades
+            })
+
+        return Response(resultado)

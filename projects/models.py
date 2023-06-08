@@ -46,6 +46,9 @@ class Anemia(models.Model):
     MCHC=models.CharField(max_length=100)
     MCV=models.CharField(max_length=100)
     Resultado=models.CharField(max_length=100)
+    fecha = models.DateTimeField(auto_now_add=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, unique=True)
+    medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     def __str__(self):
         return self.Resultado
 class Diabetes(models.Model):
@@ -58,6 +61,9 @@ class Diabetes(models.Model):
     nivelGlucosa=models.CharField(max_length=100)
     edad=models.IntegerField(default=0)
     resultado=models.CharField(max_length=100)
+    fecha = models.DateTimeField(auto_now_add=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, unique=True)
+    medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     def __str__(self):
         return self.fumador
 class  CancerPulmonar(models.Model):
@@ -80,19 +86,6 @@ class  CancerPulmonar(models.Model):
     DificultadTragar=models.IntegerField()
     TosSeca=models.IntegerField()
     resultados=models.CharField(max_length=100)
-class HistorialPaciente(models.Model):    
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-    anemia = models.ForeignKey(Anemia, null=True, blank=True, on_delete=models.SET_NULL)
-    diabetes = models.ForeignKey(Diabetes, null=True, blank=True, on_delete=models.SET_NULL)
-    cancer_pulmonar = models.ForeignKey(CancerPulmonar, null=True, blank=True, on_delete=models.SET_NULL)
-    class Meta:
-        unique_together = ['paciente', 'anemia', 'diabetes', 'cancer_pulmonar']
-class AsignacionMedico(models.Model):
-    historial = models.ForeignKey(HistorialPaciente, on_delete=models.CASCADE)
+    fecha = models.DateTimeField(auto_now_add=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, unique=True)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
-    fecha_asignacion = models.DateField()
-
-    # Otros campos adicionales relacionados con la asignación del médico al historial
-    class Meta:
-        verbose_name_plural = "Asignaciones Médicas"
-        unique_together=['historial']

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Project
 from .models import Anemia,Diabetes,CancerPulmonar
-from .models import Hospital,Medico,Paciente,HistorialPaciente,AsignacionMedico
+from .models import Hospital,Medico,Paciente
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,15 +12,18 @@ class ProjectSerializer(serializers.ModelSerializer):
 class AnemiaSerializer(serializers.ModelSerializer):
     class Meta:
         model= Anemia
-        fields=('__all__')
+        exclude=['paciente','medico']        
+        read_only_fields = ('fecha',)
 class DiabetesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diabetes
-        fields=('__all__')
+        exclude=['paciente','medico']        
+        read_only_fields = ('fecha',)
 class  CancerPulmonarSerializer(serializers.ModelSerializer):
     class Meta:
         model= CancerPulmonar
-        fields=('__all__')
+        exclude=['paciente','medico']        
+        read_only_fields = ('fecha',)
 class HopitalSerializer(serializers.ModelSerializer):
     class Meta:
         model= Hospital
@@ -33,14 +36,14 @@ class PacienteSerializer(serializers.ModelSerializer):
     class Meta:
         model=Paciente
         fields=('__all__')
-class HistorialSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=HistorialPaciente
-        fields=('__all__')
-        #exclude=['paciente','anemia','diabetes','cancer_pulmonar']
-        unique_together = ['paciente', 'anemia', 'diabetes', 'cancer_pulmonar']
-class AsignacionMedicoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=AsignacionMedico
-        fields=('__all__')
-        # exclude=['fecha_asignacion']
+# class HistorialSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model=HistorialPaciente
+#         fields=('__all__')
+#         #exclude=['paciente','anemia','diabetes','cancer_pulmonar']
+#         unique_together = ['paciente', 'anemia', 'diabetes', 'cancer_pulmonar']
+# class AsignacionMedicoSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model=AsignacionMedico
+#         fields=('__all__')
+#         # exclude=['fecha_asignacion']
