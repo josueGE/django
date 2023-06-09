@@ -47,7 +47,7 @@ class Anemia(models.Model):
     MCV=models.CharField(max_length=100)
     Resultado=models.CharField(max_length=100)
     fecha = models.DateTimeField(auto_now_add=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, unique=True)
+    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     def __str__(self):
         return self.Resultado
@@ -62,7 +62,7 @@ class Diabetes(models.Model):
     edad=models.IntegerField(default=0)
     resultado=models.CharField(max_length=100)
     fecha = models.DateTimeField(auto_now_add=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, unique=True)
+    pacientepaciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     def __str__(self):
         return self.fumador
@@ -87,5 +87,5 @@ class  CancerPulmonar(models.Model):
     TosSeca=models.IntegerField()
     resultados=models.CharField(max_length=100)
     fecha = models.DateTimeField(auto_now_add=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, unique=True)
+    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)

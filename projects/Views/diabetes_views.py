@@ -31,7 +31,10 @@ class DiabetesViewSet(viewsets.ModelViewSet):
             return Response({'error': 'El medico no existe.'}, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save(paciente=codigo_medico_obj,medico=codigo_medico_obj)
+            try:
+                serializer.save(paciente=codigo_paciente_obj,medico=codigo_medico_obj)
+            except :
+                return Response({'error': 'El paciente ya está registrado.'}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -10,9 +10,12 @@ class ProjectSerializer(serializers.ModelSerializer):
         read_only_fields = ('created_at',)
 
 class AnemiaSerializer(serializers.ModelSerializer):
+    paciente = serializers.SlugRelatedField(slug_field='id', queryset=Paciente.objects.all(), )
+    medico = serializers.SlugRelatedField(slug_field='id', queryset=Medico.objects.all(), )
     class Meta:
         model= Anemia
-        exclude=['paciente','medico']        
+        fields=('__all__')
+        # exclude=['paciente','medico']      
         read_only_fields = ('fecha',)
 class DiabetesSerializer(serializers.ModelSerializer):
     class Meta:
