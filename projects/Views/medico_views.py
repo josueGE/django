@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from projects.serializers import MedicoSerializer
-from projects.models import Medico,Hospital, Paciente
+from projects.models import Medico,Hospital, Paciente,Anemia,Diabetes,CancerPulmonar
 from django.contrib.auth.models import User
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
@@ -101,25 +101,33 @@ class  MedicoViewSet(viewsets.ModelViewSet):
             'token':token,
         },status=status.HTTP_200_OK)
     def obtener_pacientes_por_medico(self,request,medico_id):
-        pacientes = Paciente.objects.filter(
-            Q(anemia__medico_id=medico_id) | Q(diabetes__medico_id=medico_id) | Q(cancerpulmonar__medico_id=medico_id)
-        ).prefetch_related('anemia_set', 'diabetes_set', 'cancerpulmonar_set')
-
-        resultado = []
-        for paciente in pacientes:
-            enfermedades = []
-
-            if paciente.anemia_set.filter(medico_id=medico_id).exists():
-                enfermedades.append('anemia')
-            if paciente.diabetes_set.filter(medico_id=medico_id).exists():
-                enfermedades.append('diabetes')
-            if paciente.cancerpulmonar_set.filter(medico_id=medico_id).exists():
-                enfermedades.append('cancer_pulmonar')
-
-            resultado.append({
-                'nombre': paciente.nombre,
-                'apellido': paciente.apellido,
-                'enfermedades': enfermedades
-            })
-
-        return Response(resultado)
+        try:
+            medico= Medico.objects.get(pk=medico_id)
+            anemias = Anemia.objects.filter(medico_id=medico_id)
+            diabetes = Diabetes.objects.filter(medico_id=medico_id)
+            cancer_pulmonar = CancerPulmonar.objects.filter(medico_id=medico_id)
+            resultado = []
+            for anemia in anemias:
+                paciente = anemia.paciente
+                resultado.append({
+                    'nombre': paciente.nombre,
+                    'apellido': paciente.apellido,
+                    'enfermedad': 'anemia'
+                })
+            for diabetic in diabetes:
+                paciente = diabetic.pacientepaciente
+                resultado.append({
+                    'nombre': paciente.nombre,
+                    'apellido': paciente.apellido,
+                    'enfermedad': 'diabetes'
+                })
+            for cancer in cancer_pulmonar:
+                paciente = cancer.paciente
+                resultado.append({
+                    'nombre': paciente.nombre,
+                    'apellido': paciente.apellido,
+                    'enfermedad': 'cancer_pulmonar'
+                })
+            return Response(resultado)
+        except Medico.DoesNotExist:
+            return Response({'error': f"No se encontró el médico con ID {medico_id}"}, status=status.HTTP_404_NOT_FOUND)
