@@ -62,7 +62,7 @@ class Diabetes(models.Model):
     edad=models.IntegerField(default=0)
     resultado=models.CharField(max_length=100)
     fecha = models.DateTimeField(auto_now_add=True)
-    pacientepaciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
+    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     def __str__(self):
         return self.fumador

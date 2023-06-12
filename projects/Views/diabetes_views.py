@@ -15,24 +15,24 @@ class DiabetesViewSet(viewsets.ModelViewSet):
     queryset = Diabetes.objects.all()         
 
     def create(self, request):
-        codigo_paciente = request.data.get('paciente')
-        codigo_medico = request.data.get('medico')
-        if not codigo_paciente:
-            return Response({'error': 'El campo paciente es requerido.'}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            codigo_paciente_obj = Paciente.objects.get(pk=codigo_paciente)
-        except Paciente.DoesNotExist:
-            return Response({'error': 'El paciente no existe.'}, status=status.HTTP_400_BAD_REQUEST)
-        if not codigo_medico:
-            return Response({'error': 'El campo medico es requerido.'}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            codigo_medico_obj = Medico.objects.get(pk=codigo_medico)
-        except Medico.DoesNotExist:
-            return Response({'error': 'El medico no existe.'}, status=status.HTTP_400_BAD_REQUEST)
+        # codigo_paciente = request.data.get('paciente')
+        # codigo_medico = request.data.get('medico')
+        # if not codigo_paciente:
+        #     return Response({'error': 'El campo paciente es requerido.'}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        #     codigo_paciente_obj = Paciente.objects.get(pk=codigo_paciente)
+        # except Paciente.DoesNotExist:
+        #     return Response({'error': 'El paciente no existe.'}, status=status.HTTP_400_BAD_REQUEST)
+        # if not codigo_medico:
+        #     return Response({'error': 'El campo medico es requerido.'}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        #     codigo_medico_obj = Medico.objects.get(pk=codigo_medico)
+        # except Medico.DoesNotExist:
+        #     return Response({'error': 'El medico no existe.'}, status=status.HTTP_400_BAD_REQUEST)
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             try:
-                serializer.save(paciente=codigo_paciente_obj,medico=codigo_medico_obj)
+                serializer.save()
             except :
                 return Response({'error': 'El paciente ya está registrado.'}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)

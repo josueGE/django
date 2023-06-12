@@ -22,14 +22,15 @@ class DiabetesSerializer(serializers.ModelSerializer):
     medico = serializers.SlugRelatedField(slug_field='id', queryset=Medico.objects.all(), )
     class Meta:
         model = Diabetes
-        exclude=['paciente','medico']        
+        fields=('__all__')        
         read_only_fields = ('fecha',)
 class  CancerPulmonarSerializer(serializers.ModelSerializer):
     paciente = serializers.SlugRelatedField(slug_field='id', queryset=Paciente.objects.all(), )
     medico = serializers.SlugRelatedField(slug_field='id', queryset=Medico.objects.all(), )
     class Meta:
         model= CancerPulmonar
-        exclude=['paciente','medico']        
+        fields=('__all__')
+        # exclude=['paciente','medico']        
         read_only_fields = ('fecha',)
 class HopitalSerializer(serializers.ModelSerializer):
     class Meta:
