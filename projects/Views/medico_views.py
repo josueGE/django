@@ -115,7 +115,7 @@ class  MedicoViewSet(viewsets.ModelViewSet):
                     'enfermedad': 'anemia'
                 })
             for diabetic in diabetes:
-                paciente = diabetic.pacientepaciente
+                paciente = diabetic.paciente
                 resultado.append({
                     'nombre': paciente.nombre,
                     'apellido': paciente.apellido,
