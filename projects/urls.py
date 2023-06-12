@@ -32,4 +32,5 @@ urlpatterns = [
     path('search/', PacienteViewSet.as_view({'get': 'search'}), name='search'),
     # path('paciente/enfermedades/<int:pk>/', PacienteViewSet.as_view({'get': 'obtener_enfermedades_paciente'}), name='obtener-enfermedades-paciente'),
     path('medico/pacientes/<int:medico_id>/',MedicoViewSet.as_view({'get':'obtener_pacientes_por_medico'}) , name='obtener-pacientes-por-medico'),
+    path('paciente/enfermedades/<int:pk>/',PacienteViewSet.as_view({'get':'enfermedadesPaciente'}) , name='enfermedadesPaciente'),
 ]

@@ -1,3 +1,4 @@
+from django.forms import model_to_dict
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -91,4 +92,34 @@ class PacienteViewSet(viewsets.ModelViewSet):
                 'apellido': paciente.apellido,
                 'enfermedades': enfermedades
             })
-        return Response(resultado)    
+        return Response(resultado) 
+    def enfermedadesPaciente(self, request, pk=None):
+        try:
+            paciente = Paciente.objects.get(pk=pk)
+            anemias = Anemia.objects.filter(paciente=paciente)
+            diabetes = Diabetes.objects.filter(paciente=paciente)
+            cancer_pulmonar = CancerPulmonar.objects.filter(paciente=paciente)
+            resultado = []
+            
+            for anemia in anemias:
+                resultado.append({
+                    'enfermedad': 'anemia',
+                    'datos': model_to_dict(anemia),  # Convierte el modelo a un diccionario
+                })
+            
+            for diabetic in diabetes:
+                resultado.append({
+                    'enfermedad': 'diabetes',
+                    'datos': model_to_dict(diabetic),  # Convierte el modelo a un diccionario
+                })
+            
+            for cancer in cancer_pulmonar:
+                resultado.append({
+                    'enfermedad': 'cancer_pulmonar',
+                    'datos': model_to_dict(cancer),  # Convierte el modelo a un diccionario
+                })
+            
+            return Response(resultado)
+        
+        except Paciente.DoesNotExist:
+            return Response({'error': f"No se encontró el paciente con ID {pk}"}, status=status.HTTP_404_NOT_FOUND)

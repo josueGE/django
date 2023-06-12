@@ -100,34 +100,42 @@ class  MedicoViewSet(viewsets.ModelViewSet):
             },
             'token':token,
         },status=status.HTTP_200_OK)
-    def obtener_pacientes_por_medico(self,request,medico_id):
+    def obtener_pacientes_por_medico(self, request, medico_id=None):
         try:
-            medico= Medico.objects.get(pk=medico_id)
+            medico = Medico.objects.get(pk=medico_id)
             anemias = Anemia.objects.filter(medico_id=medico_id)
             diabetes = Diabetes.objects.filter(medico_id=medico_id)
             cancer_pulmonar = CancerPulmonar.objects.filter(medico_id=medico_id)
             resultado = []
+            
             for anemia in anemias:
                 paciente = anemia.paciente
                 resultado.append({
+                    'id': paciente.id,
                     'nombre': paciente.nombre,
                     'apellido': paciente.apellido,
                     'enfermedad': 'anemia'
                 })
+            
             for diabetic in diabetes:
                 paciente = diabetic.paciente
                 resultado.append({
+                    'id': paciente.id,
                     'nombre': paciente.nombre,
                     'apellido': paciente.apellido,
                     'enfermedad': 'diabetes'
                 })
+            
             for cancer in cancer_pulmonar:
                 paciente = cancer.paciente
                 resultado.append({
+                    'id': paciente.id,
                     'nombre': paciente.nombre,
                     'apellido': paciente.apellido,
                     'enfermedad': 'cancer_pulmonar'
                 })
+            
             return Response(resultado)
+        
         except Medico.DoesNotExist:
             return Response({'error': f"No se encontró el médico con ID {medico_id}"}, status=status.HTTP_404_NOT_FOUND)
