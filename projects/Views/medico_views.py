@@ -111,7 +111,8 @@ class  MedicoViewSet(viewsets.ModelViewSet):
             for anemia in anemias:
                 paciente = anemia.paciente
                 resultado.append({
-                    'id': paciente.id,
+                    'id_paciente': paciente.id,
+                    'anemia_id': anemia.id,  # Agrega el ID de la enfermedad
                     'nombre': paciente.nombre,
                     'apellido': paciente.apellido,
                     'enfermedad': 'anemia'
@@ -120,7 +121,8 @@ class  MedicoViewSet(viewsets.ModelViewSet):
             for diabetic in diabetes:
                 paciente = diabetic.paciente
                 resultado.append({
-                    'id': paciente.id,
+                    'id_paciente': paciente.id,
+                    'id_enfermedad': diabetic.id,  # Agrega el ID de la enfermedad
                     'nombre': paciente.nombre,
                     'apellido': paciente.apellido,
                     'enfermedad': 'diabetes'
@@ -129,7 +131,8 @@ class  MedicoViewSet(viewsets.ModelViewSet):
             for cancer in cancer_pulmonar:
                 paciente = cancer.paciente
                 resultado.append({
-                    'id': paciente.id,
+                    'id_paciente': paciente.id,
+                    'id_enfermedad': cancer.id,  # Agrega el ID de la enfermedad
                     'nombre': paciente.nombre,
                     'apellido': paciente.apellido,
                     'enfermedad': 'cancer_pulmonar'

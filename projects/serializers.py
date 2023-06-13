@@ -27,6 +27,7 @@ class DiabetesSerializer(serializers.ModelSerializer):
 class  CancerPulmonarSerializer(serializers.ModelSerializer):
     paciente = serializers.SlugRelatedField(slug_field='id', queryset=Paciente.objects.all(), )
     medico = serializers.SlugRelatedField(slug_field='id', queryset=Medico.objects.all(), )
+    edad = serializers.IntegerField(required=False, allow_null=True)
     class Meta:
         model= CancerPulmonar
         fields=('__all__')

@@ -67,7 +67,7 @@ class Diabetes(models.Model):
     def __str__(self):
         return self.fumador
 class  CancerPulmonar(models.Model):
-    edad=models.IntegerField()
+    edad=models.IntegerField(blank=True, null=True)
     Genero=models.IntegerField()
     ConsumoAlcohol=models.IntegerField()
     AlergiaPolvo=models.IntegerField()

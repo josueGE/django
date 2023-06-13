@@ -28,11 +28,13 @@ class CancerPulmonarViewSet(viewsets.ViewSet):
         #     codigo_medico_obj = Medico.objects.get(pk=codigo_medico)
         # except Medico.DoesNotExist:
         #     return Response({'error': 'El medico no existe.'}, status=status.HTTP_400_BAD_REQUEST)
+        paciente_id = request.data.get('paciente')
+        paciente = Paciente.objects.get(id=paciente_id)  # Actualizar el valor de 'edad' en request.data
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             try:
-                serializer.save()
-            except :
+                serializer.save(edad=paciente.edad)
+            except:
                 return Response({'error': 'El paciente ya está registrado.'}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
