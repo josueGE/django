@@ -94,7 +94,8 @@ class  MedicoViewSet(viewsets.ModelViewSet):
         'ci': medico.ci,
         'especialidad': medico.especialidad,
         'rol': medico.rol,
-        'hospital': medico.hospital.nombre,},
+        'hospital': medico.hospital.nombre,
+        'id_hospital':medico.hospital.id,},
             'usser_info':{
                 'id':user.id,
             },
