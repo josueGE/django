@@ -34,5 +34,4 @@ urlpatterns = [
     path('medico/pacientes/<int:medico_id>/',MedicoViewSet.as_view({'get':'obtener_pacientes_por_medico'}) , name='obtener-pacientes-por-medico'),
     path('paciente/enfermedades/<int:pk>/',PacienteViewSet.as_view({'get':'enfermedadesPaciente'}) , name='enfermedadesPaciente'),
     path('definir-hospital/',PacienteViewSet.as_view({'get':'definirHospitalView'}),name='definir_hospital'),
-    path()
 ]
