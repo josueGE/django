@@ -1,10 +1,10 @@
 from django.forms import model_to_dict
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from projects.serializers import PacienteSerializer
-from projects.models import Paciente,Diabetes,Anemia,CancerPulmonar
+from projects.models import Medico, Paciente,Diabetes,Anemia,CancerPulmonar,Hospital
 from django.db.models import Q
 class PacienteViewSet(viewsets.ModelViewSet):
     serializer_class = PacienteSerializer
@@ -31,11 +31,19 @@ class PacienteViewSet(viewsets.ModelViewSet):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Paciente.DoesNotExist:
                 return Response({'error': 'no existe el paciente.'}, status=status.HTTP_400_BAD_REQUEST)
-    def search(self, request):
+    def search(self, request, pk=None):
+        try:
+            medico = Medico.objects.get(pk=pk)
+        except Medico.DoesNotExist:
+            return Response({'error': 'No existe el médico.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        hospital = medico.hospital  # Obtener el hospital asociado al médico
+        
         search_query = request.query_params.get('q', '')
-        pacientes = Paciente.objects.filter(
+        pacientes = Paciente.objects.filter(hospital=hospital).filter(
             Q(nombre__icontains=search_query) | Q(apellido__icontains=search_query)
         )
+        
         result = []
         for paciente in pacientes:
             result.append({
@@ -43,6 +51,7 @@ class PacienteViewSet(viewsets.ModelViewSet):
                 'nombre': paciente.nombre,
                 'apellido': paciente.apellido,
             })
+        
         return Response(result)
     def destroy(self, request, pk=None):
         try:
@@ -123,3 +132,35 @@ class PacienteViewSet(viewsets.ModelViewSet):
         
         except Paciente.DoesNotExist:
             return Response({'error': f"No se encontró el paciente con ID {pk}"}, status=status.HTTP_404_NOT_FOUND)
+
+    def definirHospital(self, request):
+        pacientes_anemia = Paciente.objects.filter(anemia__isnull=False, hospital__isnull=True)
+        pacientes_diabetes = Paciente.objects.filter(diabetes__isnull=False, hospital__isnull=True)
+        pacientes_cancer = Paciente.objects.filter(cancerpulmonar__isnull=False, hospital__isnull=True)
+
+        # Asignar hospitales a pacientes con enfermedad de anemia
+        for paciente in pacientes_anemia:
+            enfermedad_anemia = get_object_or_404(Anemia, paciente=paciente)
+            medico = enfermedad_anemia.medico
+            paciente.hospital = medico.hospital
+            paciente.save()
+
+        # Asignar hospitales a pacientes con enfermedad de diabetes
+        for paciente in pacientes_diabetes:
+            enfermedad_diabetes = get_object_or_404(Diabetes, paciente=paciente)
+            medico = enfermedad_diabetes.medico
+            paciente.hospital = medico.hospital
+            paciente.save()
+
+        # Asignar hospitales a pacientes con enfermedad de cáncer pulmonar
+        for paciente in pacientes_cancer:
+            enfermedad_cancer = get_object_or_404(CancerPulmonar, paciente=paciente)
+            medico = enfermedad_cancer.medico
+            paciente.hospital = medico.hospital
+            paciente.save()
+
+        return Response('Asignación de hospitales realizada correctamente')
+
+    def definirHospitalView(self,request):
+        self.definirHospital(request)
+        return Response('Asignación de hospitales realizada correctamente')

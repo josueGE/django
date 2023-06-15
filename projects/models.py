@@ -31,6 +31,7 @@ class Paciente(models.Model):
     direccion = models.CharField(max_length=200)
     numero_celular = models.CharField(max_length=20, unique=True)
     ci = models.CharField(max_length=20, unique=True)
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return f'{self.nombre} {self.apellido}'
 # Create your models here.

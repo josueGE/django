@@ -29,8 +29,9 @@ urlpatterns = [
     path('', include(routerMedico.urls)),
     path('', include(routerPaciente.urls)),
     path('login/', MedicoViewSet.as_view({'post': 'login_api'}), name='login-api'),
-    path('search/', PacienteViewSet.as_view({'get': 'search'}), name='search'),
+    path('search/<int:pk>/', PacienteViewSet.as_view({'get': 'search'}), name='search'),
     # path('paciente/enfermedades/<int:pk>/', PacienteViewSet.as_view({'get': 'obtener_enfermedades_paciente'}), name='obtener-enfermedades-paciente'),
     path('medico/pacientes/<int:medico_id>/',MedicoViewSet.as_view({'get':'obtener_pacientes_por_medico'}) , name='obtener-pacientes-por-medico'),
     path('paciente/enfermedades/<int:pk>/',PacienteViewSet.as_view({'get':'enfermedadesPaciente'}) , name='enfermedadesPaciente'),
+    path('definir-hospital/',PacienteViewSet.as_view({'get':'definirHospitalView'}),name='definir_hospital'),
 ]

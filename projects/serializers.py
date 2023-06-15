@@ -42,6 +42,7 @@ class MedicoSerializer(serializers.ModelSerializer):
         model = Medico
         exclude=['hospital','user']
 class PacienteSerializer(serializers.ModelSerializer):
+    hospital = serializers.SlugRelatedField(slug_field='id', queryset=Hospital.objects.all(), )
     class Meta:
         model=Paciente
         fields=('__all__')
